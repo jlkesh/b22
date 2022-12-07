@@ -1,12 +1,11 @@
 package uz.jl.blogpost.backend.domains;
 
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 import java.time.Clock;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
-
-
 
 
 @Builder
@@ -15,12 +14,15 @@ import java.time.ZoneId;
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
-public abstract class BaseDomain {
+public class BaseDomain implements Entity {
+
+    @NonNull
+    private String id;
 
     private boolean deleted;
 
-    @Builder.Default
     private LocalDateTime createdAt = LocalDateTime.now(Clock.system(ZoneId.of("Asia/Tashkent")));
+
     private LocalDateTime updatedAt;
 
     @NonNull

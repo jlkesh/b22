@@ -1,28 +1,34 @@
 package uz.jl.blogpost.backend.domains;
 
 import lombok.*;
+import uz.jl.blogpost.backend.configs.BaseConfigurations;
 
-@AllArgsConstructor
-@NoArgsConstructor
-@Builder
+import java.time.Clock;
+import java.time.LocalDateTime;
+import java.util.Objects;
+
 @Getter
 @Setter
 @ToString
-public class User {
-    private String id;
+@NoArgsConstructor
+public class User extends BaseDomain {
+
+    @NonNull
     private String fullName;
+
+    @NonNull
     private String username;
+
+    @NonNull
     private String password;
 
-    @Builder.Default
     private Status status = Status.NOT_ACTIVE;
 
+    @NonNull
     private String email;
 
-    @Builder.Default
     private AuthRole role = AuthRole.USER;
 
-    @Builder.Default
     private Language language = Language.RU;
 
     public enum Status {
@@ -48,4 +54,17 @@ public class User {
     public enum Language {
         UZ, RU, EN
     }
+
+    @Builder(builderMethodName = "childBuilder")
+    public User(@NonNull String id, boolean deleted, LocalDateTime createdAt, LocalDateTime updatedAt, @NonNull String createdBy, String updatedBy, @NonNull String fullName, @NonNull String username, @NonNull String password, Status status, @NonNull String email, AuthRole role, Language language) {
+        super(id, deleted, createdAt, updatedAt, createdBy, updatedBy);
+        this.fullName = fullName;
+        this.username = username;
+        this.password = password;
+        this.status = status;
+        this.email = email;
+        this.role = role;
+        this.language = language;
+    }
+
 }

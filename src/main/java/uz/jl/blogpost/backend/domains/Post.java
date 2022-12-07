@@ -9,15 +9,11 @@ import java.time.ZoneId;
 
 
 @ToString
-@Builder
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Post {
-
-    @NonNull
-    private String id;
+public class Post extends BaseDomain {
 
     @NonNull
     private String title;
@@ -28,15 +24,11 @@ public class Post {
     @NonNull
     private String content;
 
-    private boolean deleted;
-
-    @Builder.Default
-    private LocalDateTime createdAt = LocalDateTime.now(Clock.system(ZoneId.of("Asia/Tashkent")));
-    private LocalDateTime updatedAt;
-
-    @NonNull
-    private String createdBy;
-
-    private String updatedBy;
-
+    @Builder(builderMethodName = "childBuilder")
+    public Post(@NonNull String id, boolean deleted, LocalDateTime createdAt, LocalDateTime updatedAt, @NonNull String createdBy, String updatedBy, @NonNull String title, @NonNull String overview, @NonNull String content) {
+        super(id, deleted, createdAt, updatedAt, createdBy, updatedBy);
+        this.title = title;
+        this.overview = overview;
+        this.content = content;
+    }
 }

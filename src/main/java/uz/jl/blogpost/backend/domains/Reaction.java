@@ -1,3 +1,4 @@
+
 package uz.jl.blogpost.backend.domains;
 
 import lombok.*;
@@ -8,24 +9,21 @@ import java.time.ZoneId;
 
 
 @ToString
-@Builder
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
-public class Reaction {
+public class Reaction extends BaseDomain {
 
-    @NonNull
-    private String id;
-
-    @NonNull
-    @Builder.Default
     private boolean like = true;
 
     @NonNull
     private String postId;
 
-
-
-
+    @Builder(builderMethodName = "childBuilder")
+    public Reaction(@NonNull String id, boolean deleted, LocalDateTime createdAt, LocalDateTime updatedAt, @NonNull String createdBy, String updatedBy, boolean like, @NonNull String postId) {
+        super(id, deleted, createdAt, updatedAt, createdBy, updatedBy);
+        this.like = like;
+        this.postId = postId;
+    }
 }
+

@@ -8,15 +8,11 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 
 @ToString
-@Builder
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Comment {
-
-    @NonNull
-    private String id;
+public class Comment extends BaseDomain {
 
     @NonNull
     private String message;
@@ -24,16 +20,10 @@ public class Comment {
     @NonNull
     private String postId;
 
-
-    private boolean deleted;
-
-    @Builder.Default
-    private LocalDateTime createdAt = LocalDateTime.now(Clock.system(ZoneId.of("Asia/Tashkent")));
-    private LocalDateTime updatedAt;
-
-    @NonNull
-    private String createdBy;
-
-    private String updatedBy;
-
+    @Builder(builderMethodName = "childBuilder")
+    public Comment(@NonNull String id, boolean deleted, LocalDateTime createdAt, LocalDateTime updatedAt, @NonNull String createdBy, String updatedBy, @NonNull String message, @NonNull String postId) {
+        super(id, deleted, createdAt, updatedAt, createdBy, updatedBy);
+        this.message = message;
+        this.postId = postId;
+    }
 }
