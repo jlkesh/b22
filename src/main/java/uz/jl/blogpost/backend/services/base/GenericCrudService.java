@@ -1,9 +1,12 @@
-package uz.jl.blogpost.backend.services;
+package uz.jl.blogpost.backend.services.base;
 
 
+import lombok.NonNull;
 import uz.jl.blogpost.backend.criteria.GenericCriteria;
 import uz.jl.blogpost.backend.dtos.Dto;
 import uz.jl.blogpost.backend.dtos.GenericDto;
+import uz.jl.blogpost.backend.response.Data;
+import uz.jl.blogpost.backend.response.Response;
 
 import java.io.Serializable;
 
@@ -23,9 +26,9 @@ public interface GenericCrudService<
         ID extends Serializable,
         C extends GenericCriteria>
         extends GenericService<D, ID, C> {
-    ID create(CD dto);
+    Response<Data<ID>> create(@NonNull CD dto);
 
-    Boolean update(UD dto);
+    Response<Data<Boolean>> update(@NonNull UD dto);
 
-    Boolean delete(ID id);
+    Response<Data<Boolean>> delete(@NonNull ID id);
 }

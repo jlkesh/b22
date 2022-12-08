@@ -1,4 +1,6 @@
 package uz.jl.blogpost.backend.dtos;
 
-public interface Dto {
+import java.io.Serializable;
+
+public interface Dto extends Serializable {
 }
