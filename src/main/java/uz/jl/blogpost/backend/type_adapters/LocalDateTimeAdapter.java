@@ -26,6 +26,6 @@ public class LocalDateTimeAdapter extends TypeAdapter<LocalDateTime> {
             jsonReader.nextNull();
             return null;
         }
-        return ZonedDateTime.parse(jsonReader.nextString()).toLocalDateTime();
+        return LocalDateTime.parse(jsonReader.nextString());
     }
 }

@@ -2,6 +2,7 @@ package uz.jl.blogpost.backend.daos;
 
 import com.google.gson.reflect.TypeToken;
 import uz.jl.blogpost.backend.domains.Entity;
+import uz.jl.blogpost.backend.dtos.user.UserDTO;
 import uz.jl.blogpost.backend.utils.BaseUtil;
 
 import java.io.*;
@@ -55,8 +56,7 @@ public abstract class GenericDAO<T extends Entity> {
         try (FileReader fileReader = new FileReader(path);
              BufferedReader bufferedReader = new BufferedReader(fileReader)) {
             String jsonDATA = bufferedReader.lines().collect(Collectors.joining());
-            Type type = new TypeToken<ArrayList<T>>() {
-            }.getType();
+            Type type = TypeToken.getParameterized(List.class, persistentClass).getType();
             return GSON.fromJson(jsonDATA, type);
         } catch (IOException e) {
             return new ArrayList<>();

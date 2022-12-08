@@ -12,6 +12,7 @@ import uz.jl.blogpost.backend.response.DataDTO;
 import uz.jl.blogpost.backend.response.Response;
 import uz.jl.blogpost.backend.services.UserService;
 import uz.jl.blogpost.backend.services.UserServiceImpl;
+import uz.jl.blogpost.backend.utils.BaseUtil;
 import uz.jl.blogpost.backend.utils.validators.UserValidator;
 
 public class UserServiceTest {
@@ -39,16 +40,25 @@ public class UserServiceTest {
 
 
     @Test
-    void login() {
+    void login_with_right_credentials_Test() {
         String username = "jl";
         String password = "123";
         LoginRequest loginRequest = new LoginRequest(username, password);
         Response<DataDTO<UserDTO>> response = service.login(loginRequest);
         DataDTO<UserDTO> data = response.data();
-        System.out.println(data);
+        System.out.println("data = " + data);
         Assertions.assertTrue(data.isSuccess());
+    }
 
-
+    @Test
+    void login_with_bad_credentials_Test() {
+        String username = "jl";
+        String password = "1234";
+        LoginRequest loginRequest = new LoginRequest(username, password);
+        Response<DataDTO<UserDTO>> response = service.login(loginRequest);
+        DataDTO<UserDTO> data = response.data();
+        System.out.println(data.getError());
+        Assertions.assertFalse(data.isSuccess());
 
     }
 }

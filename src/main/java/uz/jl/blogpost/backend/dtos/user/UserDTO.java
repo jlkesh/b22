@@ -10,6 +10,7 @@ import java.time.ZoneId;
 
 @Getter
 @Setter
+@ToString
 @NoArgsConstructor
 public class UserDTO extends GenericDto {
     private String fullName;

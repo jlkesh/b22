@@ -73,7 +73,7 @@ public class UserServiceImpl extends AbstractService<UserDAO, UserMapper, UserVa
             return new Response<>(new DataDTO<>(userDTO));
         } catch (RuntimeException e) {
             // TODO: 08/12/22 need to logger here
-            return new Response<>(new DataDTO<>(new ErrorDTO(e)));
+            return new Response<>(new DataDTO<>(new ErrorDTO("Bad credentials")));
         }
     }
 }
