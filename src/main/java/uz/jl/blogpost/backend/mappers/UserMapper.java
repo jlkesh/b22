@@ -2,14 +2,13 @@ package uz.jl.blogpost.backend.mappers;
 
 import lombok.NonNull;
 import uz.jl.blogpost.backend.domains.User;
-import uz.jl.blogpost.backend.dtos.UserCreateDTO;
-import uz.jl.blogpost.backend.dtos.UserDTO;
-import uz.jl.blogpost.backend.dtos.UserUpdateDTO;
+import uz.jl.blogpost.backend.dtos.user.UserCreateDTO;
+import uz.jl.blogpost.backend.dtos.user.UserDTO;
+import uz.jl.blogpost.backend.dtos.user.UserUpdateDTO;
 
 import java.time.Clock;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
-import java.util.Date;
 import java.util.List;
 
 public class UserMapper implements BaseMapper<User, UserDTO, UserCreateDTO, UserUpdateDTO> {
@@ -22,7 +21,7 @@ public class UserMapper implements BaseMapper<User, UserDTO, UserCreateDTO, User
                 .fullName(dto.fullName())
                 .status(User.Status.NOT_ACTIVE)
                 .role(User.AuthRole.USER)
-                .createdAt(new Date())
+                .createdAt(LocalDateTime.now(Clock.system(ZoneId.of("Asia/Tashkent"))))
                 .language(User.Language.RU)
                 .build();
     }
@@ -34,7 +33,16 @@ public class UserMapper implements BaseMapper<User, UserDTO, UserCreateDTO, User
 
     @Override
     public UserDTO toDTO(@NonNull User domain) {
-        return null;
+        return UserDTO.childBuilder()
+                .id(domain.getId())
+                .username(domain.getUsername())
+                .role(domain.getRole().name())
+                .status(domain.getStatus().name())
+                .password(null)
+                .email(domain.getEmail())
+                .fullName(domain.getFullName())
+                .language(domain.getLanguage().name())
+                .build();
     }
 
     @Override

@@ -4,9 +4,10 @@ import lombok.NonNull;
 import uz.jl.blogpost.backend.criteria.UserCriteria;
 import uz.jl.blogpost.backend.daos.UserDAO;
 import uz.jl.blogpost.backend.domains.User;
-import uz.jl.blogpost.backend.dtos.UserCreateDTO;
-import uz.jl.blogpost.backend.dtos.UserDTO;
-import uz.jl.blogpost.backend.dtos.UserUpdateDTO;
+import uz.jl.blogpost.backend.dtos.user.LoginRequest;
+import uz.jl.blogpost.backend.dtos.user.UserCreateDTO;
+import uz.jl.blogpost.backend.dtos.user.UserDTO;
+import uz.jl.blogpost.backend.dtos.user.UserUpdateDTO;
 import uz.jl.blogpost.backend.mappers.UserMapper;
 import uz.jl.blogpost.backend.response.DataDTO;
 import uz.jl.blogpost.backend.response.ErrorDTO;
@@ -60,5 +61,19 @@ public class UserServiceImpl extends AbstractService<UserDAO, UserMapper, UserVa
     @Override
     public Response<DataDTO<List<UserDTO>>> getAll(@NonNull UserCriteria criteria) {
         return null;
+    }
+
+    @Override
+    public Response<DataDTO<UserDTO>> login(@NonNull LoginRequest loginRequest) {
+        try {
+            User user = dao.findByUsername(loginRequest.username());
+            if (!util.match(loginRequest.password(), user.getPassword()))
+                return new Response<>(new DataDTO<>(new ErrorDTO("Bad credentials")));
+            UserDTO userDTO = mapper.toDTO(user);
+            return new Response<>(new DataDTO<>(userDTO));
+        } catch (RuntimeException e) {
+            // TODO: 08/12/22 need to logger here
+            return new Response<>(new DataDTO<>(new ErrorDTO(e)));
+        }
     }
 }

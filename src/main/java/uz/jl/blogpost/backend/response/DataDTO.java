@@ -1,7 +1,12 @@
 package uz.jl.blogpost.backend.response;
 
+import lombok.Getter;
+import lombok.ToString;
+
 import java.io.Serializable;
 
+@Getter
+@ToString
 public class DataDTO<T> implements Serializable {
 
     protected T data;

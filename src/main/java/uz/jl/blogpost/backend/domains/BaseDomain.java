@@ -6,7 +6,6 @@ import lombok.experimental.SuperBuilder;
 import java.time.Clock;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
-import java.util.Date;
 
 
 @Builder
@@ -22,9 +21,9 @@ public class BaseDomain implements Entity {
     private boolean deleted;
 
     // private LocalDateTime createdAt = LocalDateTime.now(Clock.system(ZoneId.of("Asia/Tashkent")));
-    private Date createdAt = new Date();
+    private LocalDateTime createdAt = LocalDateTime.now(Clock.system(ZoneId.of("Asia/Tashkent")));
 
-    private Date updatedAt;
+    private LocalDateTime updatedAt;
 
     private String createdBy;
 

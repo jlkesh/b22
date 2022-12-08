@@ -20,7 +20,7 @@ public abstract class GenericDAO<T extends Entity> {
 
     private final Class<T> persistentClass;
     private final String fileName;
-    private final List<T> data;
+    protected final List<T> data;
     private final String rootPath = "src/main/resources/%s.json";
 
 

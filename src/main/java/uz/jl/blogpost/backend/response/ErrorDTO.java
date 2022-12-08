@@ -2,8 +2,10 @@ package uz.jl.blogpost.backend.response;
 
 import lombok.Getter;
 import lombok.NonNull;
+import lombok.ToString;
 
 @Getter
+@ToString
 public class ErrorDTO {
     private String friendlyMessage;
     private String developerMessage;

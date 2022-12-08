@@ -1,9 +1,8 @@
 package uz.jl.blogpost.backend.utils.validators;
 
 import lombok.NonNull;
-import uz.jl.blogpost.backend.daos.UserDAO;
-import uz.jl.blogpost.backend.dtos.UserCreateDTO;
-import uz.jl.blogpost.backend.dtos.UserUpdateDTO;
+import uz.jl.blogpost.backend.dtos.user.UserCreateDTO;
+import uz.jl.blogpost.backend.dtos.user.UserUpdateDTO;
 
 import java.util.Objects;
 import java.util.regex.Pattern;

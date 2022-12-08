@@ -1,0 +1,14 @@
+[
+  {
+    "fullName": "Elmurodov Javohir",
+    "username": "jl",
+    "password": "$2a$10$gjoyQOLwLq9q7sq.IKydfehdy3qXDKs0iZJ/HB9InHlS8ZZYpNId.",
+    "status": "NOT_ACTIVE",
+    "email": "john@gmail.com",
+    "role": "USER",
+    "language": "RU",
+    "id": "c00972cf-1c20-442f-a0fc-0f7a45bda904",
+    "deleted": false,
+    "createdAt": "2022-12-08T14:30:44.353431428"
+  }
+]
