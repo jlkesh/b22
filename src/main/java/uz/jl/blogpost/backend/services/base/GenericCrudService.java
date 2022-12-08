@@ -5,7 +5,7 @@ import lombok.NonNull;
 import uz.jl.blogpost.backend.criteria.GenericCriteria;
 import uz.jl.blogpost.backend.dtos.Dto;
 import uz.jl.blogpost.backend.dtos.GenericDto;
-import uz.jl.blogpost.backend.response.Data;
+import uz.jl.blogpost.backend.response.DataDTO;
 import uz.jl.blogpost.backend.response.Response;
 
 import java.io.Serializable;
@@ -26,9 +26,9 @@ public interface GenericCrudService<
         ID extends Serializable,
         C extends GenericCriteria>
         extends GenericService<D, ID, C> {
-    Response<Data<ID>> create(@NonNull CD dto);
+    Response<DataDTO<ID>> create(@NonNull CD dto);
 
-    Response<Data<Boolean>> update(@NonNull UD dto);
+    Response<DataDTO<Boolean>> update(@NonNull UD dto);
 
-    Response<Data<Boolean>> delete(@NonNull ID id);
+    Response<DataDTO<Boolean>> delete(@NonNull ID id);
 }

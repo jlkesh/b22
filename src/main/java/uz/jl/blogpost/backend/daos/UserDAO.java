@@ -1,9 +1,11 @@
 package uz.jl.blogpost.backend.daos;
 
-public class UserDAO implements AbstractDAO {
+import uz.jl.blogpost.backend.domains.User;
 
-    public Object save(Object t) {
-        return null;
+public class UserDAO extends GenericDAO<User> implements AbstractDAO {
+
+
+    public UserDAO() {
+        super();
     }
-
 }

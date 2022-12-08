@@ -5,6 +5,7 @@ import uz.jl.blogpost.backend.configs.BaseConfigurations;
 
 import java.time.Clock;
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.Objects;
 
 @Getter
@@ -56,7 +57,7 @@ public class User extends BaseDomain {
     }
 
     @Builder(builderMethodName = "childBuilder")
-    public User(@NonNull String id, boolean deleted, LocalDateTime createdAt, LocalDateTime updatedAt, @NonNull String createdBy, String updatedBy, @NonNull String fullName, @NonNull String username, @NonNull String password, Status status, @NonNull String email, AuthRole role, Language language) {
+    public User(String id, boolean deleted, Date createdAt, Date updatedAt, String createdBy, String updatedBy, @NonNull String fullName, @NonNull String username, @NonNull String password, Status status, @NonNull String email, AuthRole role, Language language) {
         super(id, deleted, createdAt, updatedAt, createdBy, updatedBy);
         this.fullName = fullName;
         this.username = username;

@@ -9,6 +9,7 @@ import uz.jl.blogpost.backend.dtos.UserUpdateDTO;
 import java.time.Clock;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.util.Date;
 import java.util.List;
 
 public class UserMapper implements BaseMapper<User, UserDTO, UserCreateDTO, UserUpdateDTO> {
@@ -21,7 +22,7 @@ public class UserMapper implements BaseMapper<User, UserDTO, UserCreateDTO, User
                 .fullName(dto.fullName())
                 .status(User.Status.NOT_ACTIVE)
                 .role(User.AuthRole.USER)
-                .createdAt(LocalDateTime.now(Clock.system(ZoneId.of("Asia/Tashkent"))))
+                .createdAt(new Date())
                 .language(User.Language.RU)
                 .build();
     }

@@ -7,6 +7,8 @@ import uz.jl.blogpost.backend.mappers.Mapper;
 import uz.jl.blogpost.backend.utils.BaseUtil;
 import uz.jl.blogpost.backend.utils.validators.BaseValidator;
 
+import static uz.jl.blogpost.backend.utils.BaseUtil.GSON;
+
 
 public class AbstractService<R extends AbstractDAO,
         M extends Mapper,V extends BaseValidator> {
@@ -18,7 +20,7 @@ public class AbstractService<R extends AbstractDAO,
 
     public AbstractService(R dao, M mapper, V validator) {
         this.validator = validator;
-        this.gson = uz.jl.blogpost.backend.utils.Gson.gson();
+        this.gson = GSON;
         this.dao = dao;
         this.mapper = mapper;
         this.util = new BaseUtil();
