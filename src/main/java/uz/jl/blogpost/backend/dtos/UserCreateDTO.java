@@ -1,4 +1,4 @@
 package uz.jl.blogpost.backend.dtos;
 
-public class UserCreateDTO implements Dto{
+public record UserCreateDTO(String username, String password, String email, String fullName) implements Dto {
 }

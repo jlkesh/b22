@@ -13,7 +13,6 @@ import uz.jl.blogpost.backend.response.Response;
 import uz.jl.blogpost.backend.services.base.AbstractService;
 import uz.jl.blogpost.backend.utils.validators.UserValidator;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -29,18 +28,20 @@ public class UserServiceImpl extends AbstractService<UserDAO, UserMapper, UserVa
     public Response<Data<String>> create(@NonNull UserCreateDTO dto) {
         try {
             validator.checkOnCreate(dto);
-            User user = mapper.toDomain(dto);
+            User user = mapper.fromCreateDTO(dto);
+            user.setPassword(util.encode(user.getPassword()));
             dao.save(user);
-            return new Response<Data<String>>(user.getId());
+            return new Response<>(new Data<>(user.getId()));
         } catch (IllegalArgumentException e) {
             logger.severe(e.getLocalizedMessage());
-            return new Response<>(new Error(e.getCause()));
+            Error error = new Error(e.getCause());
+            return null;
+//            return new Response<>(error);
         }
     }
 
     @Override
     public Response<Data<Boolean>> update(@NonNull UserUpdateDTO dto) {
-
         return null;
     }
 

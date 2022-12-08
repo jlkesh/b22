@@ -25,7 +25,6 @@ public class BaseDomain implements Entity {
 
     private LocalDateTime updatedAt;
 
-    @NonNull
     private String createdBy;
 
     private String updatedBy;

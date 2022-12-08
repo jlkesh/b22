@@ -3,13 +3,13 @@ package uz.jl.blogpost.backend.services.base;
 
 import com.google.gson.Gson;
 import uz.jl.blogpost.backend.daos.AbstractDAO;
-import uz.jl.blogpost.backend.mappers.BaseMapper;
+import uz.jl.blogpost.backend.mappers.Mapper;
 import uz.jl.blogpost.backend.utils.BaseUtil;
 import uz.jl.blogpost.backend.utils.validators.BaseValidator;
 
 
 public class AbstractService<R extends AbstractDAO,
-        M extends BaseMapper,V extends BaseValidator> {
+        M extends Mapper,V extends BaseValidator> {
     protected final Gson gson;
     protected final R dao;
     protected final M mapper;
