@@ -39,4 +39,19 @@ public class UserDAO extends GenericDAO<User> implements AbstractDAO {
         }
         return instance;
     }
+
+    public Optional<User> findById(String id) {
+        Predicate<User> userPredicate = user -> user.getId().equals(id);
+        return data.stream().filter(userPredicate).findAny();
+    }
+
+    public boolean update(@NonNull User user) {
+        data.removeIf(user1 -> user1.getId().equals(user.getId()));
+        save(user);
+        return true;
+    }
+
+    public Optional<User> findByEmail(String email) {
+        return data.stream().filter(user -> user.getEmail().equals(email)).findAny();
+    }
 }

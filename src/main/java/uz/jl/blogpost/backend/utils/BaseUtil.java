@@ -2,6 +2,7 @@ package uz.jl.blogpost.backend.utils;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import io.github.cdimascio.dotenv.Dotenv;
 import lombok.NonNull;
 import org.mindrot.jbcrypt.BCrypt;
 import uz.jl.blogpost.backend.type_adapters.LocalDateTimeAdapter;
@@ -27,6 +28,13 @@ public class BaseUtil {
 
     public boolean match(@NonNull String rawPassword, @NonNull String encodedPassword) {
         return BCrypt.checkpw(rawPassword, encodedPassword);
+    }
+
+    public static Dotenv env() {
+        return Dotenv.configure()
+                .directory(".")
+                .filename(".secrets")
+                .load();
     }
 
 

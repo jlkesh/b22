@@ -14,15 +14,23 @@ import uz.jl.blogpost.backend.response.DataDTO;
 import uz.jl.blogpost.backend.response.ErrorDTO;
 import uz.jl.blogpost.backend.response.Response;
 import uz.jl.blogpost.backend.services.base.AbstractService;
+import uz.jl.blogpost.backend.services.mail.MailService;
 import uz.jl.blogpost.backend.utils.BaseUtil;
 import uz.jl.blogpost.backend.utils.validators.UserValidator;
 
+import java.time.Clock;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Optional;
 import java.util.logging.Logger;
 
 public class UserServiceImpl extends AbstractService<UserDAO, UserMapper, UserValidator> implements UserService {
 
     private static UserService service;
+    private final MailService mailService = ApplicationContext.getBean(MailService.class);
 
     private final Logger logger = Logger.getLogger(getClass().getName());
 
@@ -48,7 +56,38 @@ public class UserServiceImpl extends AbstractService<UserDAO, UserMapper, UserVa
 
     @Override
     public Response<DataDTO<Boolean>> update(@NonNull UserUpdateDTO dto) {
+        validator.checkID(dto.getId());
+        Optional<User> userOptional = dao.findById(dto.getId());
+        if (userOptional.isEmpty())
+            return new Response<>(new DataDTO<>(new ErrorDTO("User not found by id :%s".formatted(dto.getId()))));
+        User user = userOptional.get();
+        user.setUsername(Objects.requireNonNullElse(dto.getUsername(), user.getUsername()));
+        user.setFullName(Objects.requireNonNullElse(dto.getFullName(), user.getFullName()));
+        user.setLanguage(Objects.requireNonNullElse(User.Language.getByName(dto.getLanguage()), user.getLanguage()));
+        user.setEmail(Objects.requireNonNullElse(dto.getEmail(), user.getEmail()));
+        user.setUpdatedAt(LocalDateTime.now(Clock.system(ZoneId.of("Asia/Tashkent"))));
+        return new Response<>(new DataDTO<>(dao.update(user)));
+    }
 
+    public Response<DataDTO<Boolean>> forgetPassword(@NonNull String email) {
+        Optional<User> userOptional = dao.findByEmail(email);
+        if (userOptional.isEmpty())
+            return new Response<>(new DataDTO<>(new ErrorDTO("User not found with email %s".formatted(email))));
+        User user = userOptional.get();
+        String uniqueCode = BaseUtil.generateUniqueID();
+        Map<String, String> body = Map.of(
+                "subject", "Confirmation Code",
+                "content", uniqueCode,
+                "email", user.getEmail()
+        );
+        mailService.sendEmail(body);
+        // TODO: 11/12/22 send email
+        // TODO: 11/12/22 save email
+        return new Response<>(new DataDTO<>(true));
+    }
+
+    public Response<DataDTO<Boolean>> forgetPasswordConfirmation() {
+        // confirm and reset
         return null;
     }
 

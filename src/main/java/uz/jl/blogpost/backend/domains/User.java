@@ -52,11 +52,21 @@ public class User extends BaseDomain {
     }
 
     public enum Language {
-        UZ, RU, EN
+        UZ, RU, EN;
+
+        public static Language getByName(String languageName) {
+            for (Language language : values()) {
+                if (language.name().equalsIgnoreCase(languageName)) {
+                    return language;
+                }
+
+            }
+            return Language.RU;
+        }
     }
 
     @Builder(builderMethodName = "childBuilder")
-    public User(String id, boolean deleted, LocalDateTime createdAt, LocalDateTime updatedAt,  String createdBy, String updatedBy, @NonNull String fullName, @NonNull String username, @NonNull String password, Status status, @NonNull String email, AuthRole role, Language language) {
+    public User(String id, boolean deleted, LocalDateTime createdAt, LocalDateTime updatedAt, String createdBy, String updatedBy, @NonNull String fullName, @NonNull String username, @NonNull String password, Status status, @NonNull String email, AuthRole role, Language language) {
         super(id, deleted, createdAt, updatedAt, createdBy, updatedBy);
         this.fullName = fullName;
         this.username = username;
@@ -66,5 +76,6 @@ public class User extends BaseDomain {
         this.role = role;
         this.language = language;
     }
+
 
 }

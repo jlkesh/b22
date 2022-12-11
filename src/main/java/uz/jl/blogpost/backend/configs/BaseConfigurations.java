@@ -6,6 +6,8 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.Properties;
 
+import static uz.jl.blogpost.backend.utils.BaseUtil.env;
+
 public class BaseConfigurations {
 
     private static final Properties p = load();
@@ -27,4 +29,15 @@ public class BaseConfigurations {
         return properties;
     }
 
+    public static Properties getSMTPConfiguration() {
+        Properties prop = new Properties();
+        prop.put("mail.smtp.host", "smtp.mailtrap.io");
+        prop.put("mail.smtp.auth", "true");
+        prop.put("mail.smtp.port", "465");
+        String username = env().get("SMTP_USERNAME");
+        String password = env().get("SMTP_PASSWORD");
+        prop.put("username", username);
+        prop.put("password", password);
+        return prop;
+    }
 }

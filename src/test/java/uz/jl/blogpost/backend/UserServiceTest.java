@@ -9,6 +9,7 @@ import uz.jl.blogpost.backend.domains.User;
 import uz.jl.blogpost.backend.dtos.user.LoginRequest;
 import uz.jl.blogpost.backend.dtos.user.UserCreateDTO;
 import uz.jl.blogpost.backend.dtos.user.UserDTO;
+import uz.jl.blogpost.backend.dtos.user.UserUpdateDTO;
 import uz.jl.blogpost.backend.response.DataDTO;
 import uz.jl.blogpost.backend.response.Response;
 import uz.jl.blogpost.backend.services.UserService;
@@ -42,6 +43,19 @@ public class UserServiceTest {
         Response<DataDTO<UserDTO>> response = service.login(loginRequest);
         DataDTO<UserDTO> data = response.data();
         System.out.println("data = " + data);
+        Assertions.assertTrue(data.isSuccess());
+    }
+
+    @Test
+    void update_user_test() {
+        UserUpdateDTO userUpdateDTO = new UserUpdateDTO(
+                "c00972cf-1c20-442f-a0fc-0f7a45bda904",
+                "Javohir Elmurodov Sayfullayevich",
+                null,null, "john.lgd65@gmail.com");
+        Response<DataDTO<Boolean>> response = service.update(userUpdateDTO);
+        DataDTO<Boolean> data = response.data();
+        System.out.println("data = " + data);
+        dao.shutDownHook();
         Assertions.assertTrue(data.isSuccess());
     }
 

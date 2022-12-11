@@ -4,6 +4,7 @@ import uz.jl.blogpost.backend.dtos.Dto;
 import uz.jl.blogpost.backend.dtos.GenericDto;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 public abstract class AbstractValidator<CD extends Dto,
         UD extends GenericDto,
@@ -18,7 +19,9 @@ public abstract class AbstractValidator<CD extends Dto,
     }
 
     public void checkID(ID id) throws IllegalArgumentException {
-
+        if (Objects.isNull(id)) {
+            throw new IllegalArgumentException("Id can not be null");
+        }
     }
 
 }
