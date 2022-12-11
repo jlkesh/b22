@@ -2,8 +2,6 @@ package uz.jl.blogpost.backend.daos;
 
 import com.google.gson.reflect.TypeToken;
 import uz.jl.blogpost.backend.domains.Entity;
-import uz.jl.blogpost.backend.dtos.user.UserDTO;
-import uz.jl.blogpost.backend.utils.BaseUtil;
 
 import java.io.*;
 import java.lang.reflect.ParameterizedType;

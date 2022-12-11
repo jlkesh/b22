@@ -10,6 +10,8 @@ import java.util.function.Supplier;
 
 public class UserDAO extends GenericDAO<User> implements AbstractDAO {
 
+    private static UserDAO instance;
+
 
     public UserDAO() {
         super();
@@ -28,5 +30,13 @@ public class UserDAO extends GenericDAO<User> implements AbstractDAO {
                 .filter(predicate)
                 .findAny()
                 .orElseThrow(runtimeExceptionSupplier);
+    }
+
+
+    public static UserDAO getInstance() {
+        if (instance == null) {
+            instance = new UserDAO();
+        }
+        return instance;
     }
 }

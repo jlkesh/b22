@@ -12,4 +12,6 @@ import uz.jl.blogpost.backend.services.base.GenericCrudService;
 
 public interface UserService extends GenericCrudService<UserDTO, UserCreateDTO, UserUpdateDTO, String, UserCriteria> {
     Response<DataDTO<UserDTO>> login(@NonNull LoginRequest loginRequest);
+
+
 }

@@ -12,6 +12,9 @@ import java.time.ZoneId;
 import java.util.List;
 
 public class UserMapper implements BaseMapper<User, UserDTO, UserCreateDTO, UserUpdateDTO> {
+
+    private static UserMapper mapper;
+
     @Override
     public User fromCreateDTO(@NonNull UserCreateDTO dto) {
         return User.childBuilder()
@@ -48,5 +51,13 @@ public class UserMapper implements BaseMapper<User, UserDTO, UserCreateDTO, User
     @Override
     public List<UserDTO> toDTO(@NonNull List<User> domain) {
         return null;
+    }
+
+
+    public static UserMapper getInstance() {
+        if (mapper == null) {
+            mapper = new UserMapper();
+        }
+        return mapper;
     }
 }

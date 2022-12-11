@@ -1,6 +1,7 @@
 package uz.jl.blogpost.backend.services;
 
 import lombok.NonNull;
+import uz.jl.blogpost.backend.configs.ApplicationContext;
 import uz.jl.blogpost.backend.criteria.UserCriteria;
 import uz.jl.blogpost.backend.daos.UserDAO;
 import uz.jl.blogpost.backend.domains.User;
@@ -20,6 +21,8 @@ import java.util.List;
 import java.util.logging.Logger;
 
 public class UserServiceImpl extends AbstractService<UserDAO, UserMapper, UserValidator> implements UserService {
+
+    private static UserService service;
 
     private final Logger logger = Logger.getLogger(getClass().getName());
 
@@ -45,6 +48,7 @@ public class UserServiceImpl extends AbstractService<UserDAO, UserMapper, UserVa
 
     @Override
     public Response<DataDTO<Boolean>> update(@NonNull UserUpdateDTO dto) {
+
         return null;
     }
 
@@ -75,5 +79,16 @@ public class UserServiceImpl extends AbstractService<UserDAO, UserMapper, UserVa
             // TODO: 08/12/22 need to logger here
             return new Response<>(new DataDTO<>(new ErrorDTO("Bad credentials")));
         }
+    }
+
+    public static UserService getInstance() {
+        if (service == null) {
+            service = new UserServiceImpl(
+                    ApplicationContext.getBean(UserDAO.class),
+                    ApplicationContext.getBean(UserMapper.class),
+                    ApplicationContext.getBean(UserValidator.class)
+            );
+        }
+        return service;
     }
 }
