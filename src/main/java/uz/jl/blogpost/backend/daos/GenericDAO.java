@@ -1,6 +1,7 @@
 package uz.jl.blogpost.backend.daos;
 
 import com.google.gson.reflect.TypeToken;
+import uz.jl.blogpost.backend.criteria.GenericCriteria;
 import uz.jl.blogpost.backend.domains.Entity;
 
 import java.io.*;
@@ -8,6 +9,7 @@ import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
@@ -16,11 +18,13 @@ import static uz.jl.blogpost.backend.utils.BaseUtil.GSON;
 /**
  * @param <T> T -> Domain
  */
-public abstract class GenericDAO<T extends Entity> {
+public abstract class GenericDAO<T extends Entity, C extends GenericCriteria> {
 
     private final Class<T> persistentClass;
     private final String fileName;
     protected final List<T> data;
+
+    protected Predicate<T> filter;
     private final String rootPath = "src/main/resources/%s.json";
 
 
@@ -37,6 +41,18 @@ public abstract class GenericDAO<T extends Entity> {
     public T save(T t) {
         data.add(t);
         return t;
+    }
+
+    public List<T> getAll(C criteria) {
+        prepareCriteria(criteria);
+        List<T> responseData = data;
+        if (Objects.nonNull(filter))
+            return responseData.stream().filter(filter).toList();
+        return responseData;
+    }
+
+    protected void prepareCriteria(C criteria) {
+
     }
 
     public void shutDownHook() {

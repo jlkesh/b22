@@ -1,14 +1,12 @@
 package uz.jl.blogpost.backend.configs;
 
-import lombok.SneakyThrows;
-
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.Properties;
 
 import static uz.jl.blogpost.backend.utils.BaseUtil.env;
 
-public class BaseConfigurations {
+public class ApplicationConfigurations {
 
     private static final Properties p = load();
 

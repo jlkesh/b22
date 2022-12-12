@@ -103,7 +103,8 @@ public class UserServiceImpl extends AbstractService<UserDAO, UserMapper, UserVa
 
     @Override
     public Response<DataDTO<List<UserDTO>>> getAll(@NonNull UserCriteria criteria) {
-        return null;
+        List<User> users = dao.getAll(criteria);
+        return new Response<>(new DataDTO<>(mapper.toDTO(users), users.size()));
     }
 
     @Override

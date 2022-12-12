@@ -1,20 +1,35 @@
 package uz.jl.blogpost.backend.daos;
 
 import lombok.NonNull;
+import uz.jl.blogpost.backend.criteria.UserCriteria;
 import uz.jl.blogpost.backend.domains.User;
 import uz.jl.blogpost.backend.dtos.user.UserDTO;
 
+import java.util.Objects;
 import java.util.Optional;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
 
-public class UserDAO extends GenericDAO<User> implements AbstractDAO {
+public class UserDAO extends GenericDAO<User, UserCriteria> implements AbstractDAO {
 
     private static UserDAO instance;
 
 
     public UserDAO() {
         super();
+    }
+
+
+    @Override
+    protected void prepareCriteria(UserCriteria criteria) {
+        Predicate<User> predicates = (user) -> !user.isDeleted();
+        if (Objects.nonNull(criteria.getUsername())) {
+            predicates = predicates.and(user -> user.getUsername().contains(criteria.getUsername()));
+        }
+        if (Objects.nonNull(criteria.getEmail())) {
+            predicates = predicates.and(user -> user.getEmail().contains(criteria.getEmail()));
+        }
+        filter = predicates;
     }
 
     public User findByUsername(@NonNull String username) {

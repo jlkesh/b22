@@ -2,7 +2,7 @@ package uz.jl.blogpost.backend.services.mail;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
-import uz.jl.blogpost.backend.configs.BaseConfigurations;
+import uz.jl.blogpost.backend.configs.ApplicationConfigurations;
 
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
@@ -12,7 +12,6 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Executors;
-import java.util.function.Supplier;
 
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
@@ -20,7 +19,7 @@ public class MailService {
     private static MailService instance;
 
     private static final String EMAIL_FROM = "etm.uz@gmail.com";
-    private static final Properties PROPERTIES = BaseConfigurations.getSMTPConfiguration();
+    private static final Properties PROPERTIES = ApplicationConfigurations.getSMTPConfiguration();
 
 
     public void sendEmail(Map<String, String> body) {

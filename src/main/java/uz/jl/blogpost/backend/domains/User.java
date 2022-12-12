@@ -1,11 +1,8 @@
 package uz.jl.blogpost.backend.domains;
 
 import lombok.*;
-import uz.jl.blogpost.backend.configs.BaseConfigurations;
 
-import java.time.Clock;
 import java.time.LocalDateTime;
-import java.util.Objects;
 
 @Getter
 @Setter

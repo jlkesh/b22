@@ -30,7 +30,7 @@ public class UserMapper implements BaseMapper<User, UserDTO, UserCreateDTO, User
     }
 
     @Override
-    public User fromUpdateDTO(@NonNull UserCreateDTO dto) {
+    public User fromUpdateDTO(@NonNull UserUpdateDTO dto) {
         return null;
     }
 
@@ -49,8 +49,8 @@ public class UserMapper implements BaseMapper<User, UserDTO, UserCreateDTO, User
     }
 
     @Override
-    public List<UserDTO> toDTO(@NonNull List<User> domain) {
-        return null;
+    public List<UserDTO> toDTO(@NonNull List<User> domains) {
+        return domains.stream().map(this::toDTO).toList();
     }
 
 

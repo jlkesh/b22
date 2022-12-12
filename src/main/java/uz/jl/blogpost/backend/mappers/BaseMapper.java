@@ -7,7 +7,7 @@ import java.util.List;
 public interface BaseMapper<T, D, CD, UD> extends Mapper{
     T fromCreateDTO(@NonNull CD dto);
 
-    T fromUpdateDTO(@NonNull CD dto);
+    T fromUpdateDTO(@NonNull UD dto);
 
     D toDTO(@NonNull T domain);
 

@@ -7,7 +7,6 @@ import com.google.gson.stream.JsonWriter;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
-import java.time.ZonedDateTime;
 
 public class LocalDateTimeAdapter extends TypeAdapter<LocalDateTime> {
 

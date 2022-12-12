@@ -11,5 +11,29 @@
     "deleted": false,
     "createdAt": "2022-12-08T14:30:44.353431428",
     "updatedAt": "2022-12-11T11:37:31.632850090"
+  },
+  {
+    "fullName": "Abdulloh Elmurodov",
+    "username": "jlkesh",
+    "password": "$2a$10$05dwiyhCqBoroSa2NEYJ9.HdssIEIo.GMI6Nl7Eq3InAqag/o1BB6",
+    "status": "NOT_ACTIVE",
+    "email": "john@gmail.com",
+    "role": "USER",
+    "language": "RU",
+    "id": "78163291-e937-4e76-aad5-614830a6fba4",
+    "deleted": false,
+    "createdAt": "2022-12-12T14:45:02.459996466"
+  },
+  {
+    "fullName": "Akbarjon",
+    "username": "mashennik",
+    "password": "$2a$10$Ohpj/GG8h4uVoJ7AL/93xO4Alsz.0ibhYd/94m3Myjqn3sOAh/mVS",
+    "status": "NOT_ACTIVE",
+    "email": "akbarovakbar@gmail.com",
+    "role": "USER",
+    "language": "RU",
+    "id": "861437f8-1378-4421-ba0a-c32f4c6e7fab",
+    "deleted": false,
+    "createdAt": "2022-12-12T14:45:38.471397455"
   }
 ]
