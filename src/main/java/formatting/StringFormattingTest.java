@@ -14,7 +14,7 @@ public class StringFormattingTest {
         System.out.printf("Hello %2$-10s. Age %1$s%n", fullName, age);
         System.out.printf(Locale.CHINA, "ONE MLN %,d %n", 1_000_000);
         System.out.printf("%6.2f%n", 1D / 3);
-        System.out.printf("%S%n", "pdp");
+        System.out.printf("%TicTakToe%n", "pdp");
         System.out.printf("%B%n", null);
         */
         /*Date date = new Date();
