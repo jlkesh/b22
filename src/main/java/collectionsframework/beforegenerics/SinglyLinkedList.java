@@ -2,6 +2,7 @@ package collectionsframework.beforegenerics;
 
 import java.util.Objects;
 import java.util.StringJoiner;
+import java.util.function.BiPredicate;
 
 public class SinglyLinkedList<E> {
     private Node<E> head;
@@ -46,20 +47,31 @@ public class SinglyLinkedList<E> {
         }
     }
 
-    public E remove(Object remove) {
-        Objects.checkIndex(index, size);
-        if (index == 0) {
-            E oldValue = head.item;
-            head = head.next;
-            size--;
-            return oldValue;
-        } else {
-            var prev = getNode(index - 1);
-            var x = getNode(index);
-            prev.next = x.next;
-            size--;
-            return x.item;
+    public boolean remove(Object o) {
+        Objects.checkIndex(0, size);
+        return removeObject(((o == null) ?
+                (x, obj) -> x.item == null :
+                (x, obj) -> x.item.equals(obj)), o);
+    }
+
+
+    private boolean removeObject(BiPredicate<Node<E>, Object> predicate, Object o) {
+        Node<E> prev = null;
+        var x = head;
+
+        while (x != null) {
+            if (predicate.test(x, o)) {
+                if (prev == null) {
+                    head = x.next;
+                } else {
+                    prev.next = x.next;
+                }
+                return true;
+            }
+            prev = x;
+            x = x.next;
         }
+        return false;
     }
 
 
@@ -105,15 +117,12 @@ class SinglyLinkedListTest {
         sll.add("Kotlin");
         sll.add("Python");
         sll.add("C++");
-        sll.add("C#");
+        sll.add(null);
         System.out.println(sll);
-        System.out.println(sll.remove(3));
-        System.out.println(sll);
-
-        System.out.println(sll.remove(0));
-        System.out.println(sll);
-
-        System.out.println(sll.remove(0));
+        System.out.println(sll.remove(null));
+        System.out.println(sll.remove("Scala"));
+        System.out.println(sll.remove("Java"));
+        System.out.println(sll.remove("Python"));
         System.out.println(sll);
     }
 }
