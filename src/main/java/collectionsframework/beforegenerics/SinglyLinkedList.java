@@ -1,149 +1,189 @@
 package collectionsframework.beforegenerics;
 
+import java.awt.image.SinglePixelPackedSampleModel;
+import java.util.Iterator;
 import java.util.Objects;
 import java.util.StringJoiner;
-import java.util.function.BiPredicate;
+import java.util.function.Consumer;
 
-public class SinglyLinkedList<E> {
+public class SinglyLinkedList<E> implements Iterable<E> {
     private Node<E> head;
     private int size;
 
-    public boolean add(E item) {
-        var newNode = new Node<>(item);
+    public boolean add(E element) {
+        var newNode = new Node<>(element);
         if (head == null) {
             head = newNode;
-            size++;
-            return true;
+        } else {
+            var x = this.head;
+            while (x.next != null) {
+                x = x.next;
+            }
+            x.next = newNode;
+
         }
-
-        var x = head;
-        while (x.next != null)
-            x = x.next;
-
-        x.next = newNode;
         size++;
         return true;
     }
 
-    public E get(int index) {
-        Objects.checkIndex(index, size);
-        var x = getNode(index);
-        return x.item;
-    }
-
-    public boolean add(int index, E item) {
-        Objects.checkIndex(index, size);
-        Node<E> prev = null;
-        var x = head;
-        var newNode = new Node<>(item);
-        int i = 0;
-        while (x != null) {
-            if (i == index) {
-                if (prev == null) {
-                    head = newNode;
-                } else {
-                    prev.next = newNode;
-                }
-                newNode.next = x;
-                size++;
-                return true;
-            }
-            prev = x;
-            x = x.next;
-            i++;
-        }
-        return false;
-    }
-
-    public E remove(int index) {
-        Objects.checkIndex(index, size);
-        if (index == 0) {
-            E oldValue = head.item;
-            head = head.next;
-            size--;
-            return oldValue;
+    public boolean addAtBeginning(E element) {
+        var newNode = new Node<>(element);
+        if (head == null) {
+            head = newNode;
         } else {
-            var prev = getNode(index - 1);
-            var x = getNode(index);
-            prev.next = x.next;
-            size--;
-            return x.item;
+            newNode.next = head;
+            head = newNode;
         }
+        size++;
+        return true;
+    }
+
+
+    public boolean set(int index, E element) {
+        Objects.checkIndex(index, this.size); // show inside the method
+        if (index == 0) {
+            addAtBeginning(element);
+            return true;
+        }
+
+        var temp = this.head;
+        for (int i = 1; i < index; i++)
+            temp = temp.next;
+
+        var newNode = new Node<>(element);
+        newNode.next = temp.next;
+        temp.next = newNode;
+        this.size++;
+        return true;
+    }
+
+    public boolean removeFromBegin() {
+        if (this.head == null) return false;
+        this.head = this.head.next;
+        return true;
+    }
+
+    public boolean remove(int index) {
+        Objects.checkIndex(index, this.size);
+        if (index == 0) {
+            removeFromBegin();
+            return true;
+        }
+
+        var temp = this.head;
+        for (int i = 1; i < index; i++)
+            temp = temp.next;
+        temp.next = temp.next.next;
+        this.size--;
+        return true;
     }
 
     public boolean remove(Object o) {
-        Objects.checkIndex(0, size);
-        return removeObject(((o == null) ?
-                (x, obj) -> x.item == null :
-                (x, obj) -> x.item.equals(obj)), o);
-    }
 
+        if (this.head == null)
+            throw new IllegalArgumentException("LinkedList is empty");
 
-    private boolean removeObject(BiPredicate<Node<E>, Object> predicate, Object o) {
         Node<E> prev = null;
-        var x = head;
+        Node<E> current = head;
 
-        while (x != null) {
-            if (predicate.test(x, o)) {
+        while (current != null) {
+            if (Objects.equals(current.element, o)) {
                 if (prev == null) {
-                    head = x.next;
+                    head = current.next;
                 } else {
-                    prev.next = x.next;
+                    prev.next = current.next;
                 }
+                size--;
                 return true;
             }
-            prev = x;
-            x = x.next;
+            prev = current;
+            current = current.next;
         }
+
         return false;
     }
 
 
-    private Node<E> getNode(int index) {
-        var x = head;
-        for (int i = 1; i <= index; i++) {
-            x = x.next;
-        }
-        return x;
+    public E get(int index) {
+        Objects.checkIndex(index, this.size);
+        var x = node(index);
+        return x.element;
     }
 
-    @Override
-    public String toString() {
-        var sj = new StringJoiner(", ", "[", "]");
+
+    private Node<E> node(int index) {
+        if (index == 0)
+            return head;
+
         var x = head;
-        while (x != null) {
-            sj.add(String.valueOf(x.item));
+        for (int i = 1; i <= index; i++)
             x = x.next;
-        }
-        return sj.toString();
+
+        return x;
     }
 
     public int size() {
         return size;
     }
 
-    class Node<E> {
-        E item;
+    public void clear() {
+        this.head = null;
+        this.size = 0;
+    }
+
+    @Override
+    public Iterator<E> iterator() {
+        return new Iterator<>() {
+            private Node<E> current = head;
+
+            @Override
+            public boolean hasNext() {
+                return current != null;
+            }
+
+            @Override
+            public E next() {
+                E value = current.element;
+                current = current.next;
+                return value;
+            }
+        };
+    }
+
+
+    @Override
+    public String toString() {
+        var sj = new StringJoiner(", ", "[", "]");
+        for (E e : this) sj.add(String.valueOf(e));
+        return sj.toString();
+    }
+
+
+    static class Node<E> {
+        E element;
         Node<E> next;
 
-        public Node(E item) {
-            this.item = item;
+        public Node(E element) {
+            this.element = element;
             this.next = null;
         }
+
+    }
+
+    public static void main(String[] args) {
+
+        var sll = new SinglyLinkedList<String>();
+
+        sll.add("Java");
+        sll.add("Python");
+        sll.add("Scala");
+        sll.add(null);
+        sll.add("Kotlin");
+        sll.add("Groovy");
+        for (String s : sll) {
+            System.out.println(s);
+        }
+        System.out.println("sll = " + sll);
     }
 }
 
-class SinglyLinkedListTest {
-    public static void main(String[] args) {
-        var sll = new SinglyLinkedList<String>();
-        sll.add("Java");
-        sll.add("Scala");
-        sll.add("Kotlin");
-        sll.add("Python");
-        sll.add("C++");
-        sll.add(null);
-        System.out.println(sll);
-        System.out.println(sll.add(5,"ABAP"));
-        System.out.println(sll);
-    }
-}
