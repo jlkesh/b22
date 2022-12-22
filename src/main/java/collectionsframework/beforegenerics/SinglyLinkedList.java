@@ -31,6 +31,30 @@ public class SinglyLinkedList<E> {
         return x.item;
     }
 
+    public boolean add(int index, E item) {
+        Objects.checkIndex(index, size);
+        Node<E> prev = null;
+        var x = head;
+        var newNode = new Node<>(item);
+        int i = 0;
+        while (x != null) {
+            if (i == index) {
+                if (prev == null) {
+                    head = newNode;
+                } else {
+                    prev.next = newNode;
+                }
+                newNode.next = x;
+                size++;
+                return true;
+            }
+            prev = x;
+            x = x.next;
+            i++;
+        }
+        return false;
+    }
+
     public E remove(int index) {
         Objects.checkIndex(index, size);
         if (index == 0) {
@@ -119,10 +143,7 @@ class SinglyLinkedListTest {
         sll.add("C++");
         sll.add(null);
         System.out.println(sll);
-        System.out.println(sll.remove(null));
-        System.out.println(sll.remove("Scala"));
-        System.out.println(sll.remove("Java"));
-        System.out.println(sll.remove("Python"));
+        System.out.println(sll.add(5,"ABAP"));
         System.out.println(sll);
     }
 }
