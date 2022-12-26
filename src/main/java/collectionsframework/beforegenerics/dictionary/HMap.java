@@ -4,12 +4,13 @@ import java.util.Objects;
 
 public class HMap<K, V> {
     public static final int DEFAULT_CAPACITY = 16;
-    private Node<K, V>[] table;
+    private final Node<K, V>[] table;
 
     public HMap() {
         this(DEFAULT_CAPACITY);
     }
 
+    @SuppressWarnings("unchecked")
     public HMap(int initialCapacity) {
         this.table = new Node[initialCapacity];
     }
