@@ -1,5 +1,7 @@
 package collectionsframework.beforegenerics.dictionary;
 
+import java.util.LinkedHashMap;
+
 public class HMapTest {
     public static void main(String[] args) {
         var hMap = new HMap<String, String>();

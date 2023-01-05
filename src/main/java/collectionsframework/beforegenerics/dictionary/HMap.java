@@ -10,6 +10,7 @@ public class HMap<K, V> {
         this(DEFAULT_CAPACITY);
     }
 
+
     @SuppressWarnings("unchecked")
     public HMap(int initialCapacity) {
         this.table = new Node[initialCapacity];
@@ -53,7 +54,7 @@ public class HMap<K, V> {
 
 
     private int hash(K key) {
-        return (key.hashCode() >>> 16);
+        return (key != null ? key.hashCode() >>> 16 : 0);
     }
 
     private int index(K key) {
